@@ -1,0 +1,89 @@
+﻿@model dynamic
+@{
+    ViewData["Title"] = "DI Lifetime Demo";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewData["Title"]</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Dependency Injection Lifetime Demo</h1>
+        <p class="text-center text-muted">Refresh trang để thấy sự khác biệt giữa các lifetime</p>
+
+        <div class="row g-4">
+            <!-- Transient -->
+            <div class="col-md-4">
+                <div class="card border-danger">
+                    <div class="card-header bg-danger text-white">
+                        <h5 class="mb-0">🔴 Transient</h5>
+                    </div>
+                    <div class="card-body">
+                        <p><strong>Instance 1:</strong> <code>@Model.Transient1</code></p>
+                        <p><strong>Instance 2:</strong> <code>@Model.Transient2</code></p>
+                        <hr>
+                        <small class="text-danger">
+                            ✅ <strong>Luôn khác nhau</strong><br>
+                            Mỗi lần inject tạo instance mới
+                        </small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scoped -->
+            <div class="col-md-4">
+                <div class="card border-warning">
+                    <div class="card-header bg-warning text-dark">
+                        <h5 class="mb-0">🟡 Scoped</h5>
+                    </div>
+                    <div class="card-body">
+                        <p><strong>Instance 1:</strong> <code>@Model.Scoped1</code></p>
+                        <p><strong>Instance 2:</strong> <code>@Model.Scoped2</code></p>
+                        <hr>
+                        <small class="text-warning">
+                            ✅ <strong>Giống nhau trong 1 request</strong><br>
+                            Khác khi refresh trang (request mới)
+                        </small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Singleton -->
+            <div class="col-md-4">
+                <div class="card border-success">
+                    <div class="card-header bg-success text-white">
+                        <h5 class="mb-0">🟢 Singleton</h5>
+                    </div>
+                    <div class="card-body">
+                        <p><strong>Instance 1:</strong> <code>@Model.Singleton1</code></p>
+                        <p><strong>Instance 2:</strong> <code>@Model.Singleton2</code></p>
+                        <hr>
+                        <small class="text-success">
+                            ✅ <strong>Luôn giống nhau</strong><br>
+                            Duy nhất trong toàn app, mọi request
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-4">
+            <button class="btn btn-primary btn-lg" onclick="location.reload()">
+                🔄 Refresh Page
+            </button>
+        </div>
+
+        <div class="alert alert-info mt-4">
+            <h6>📝 Kết luận:</h6>
+            <ul class="mb-0">
+                <li><strong>Transient:</strong> 2 instance khác nhau ngay trong cùng 1 request</li>
+                <li><strong>Scoped:</strong> 2 instance giống nhau trong request hiện tại, nhưng khác khi refresh</li>
+                <li><strong>Singleton:</strong> 2 instance luôn giống nhau, dù refresh bao nhiêu lần</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
